@@ -8,10 +8,30 @@ const avg = document.getElementById("avg")
 const extra = document.getElementById("extraInfo")
 const btn2 = document.getElementById("showButton")
 const attemptList = []
+const attemptNum=[]
 var attempts = 0;
+const ctx = document.getElementById('myChart');
 
 const stopwatch = {elapsedTime: 0}
 
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: attemptNum,
+        datasets: [{
+            label: 'Time',
+            data: attemptList,
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
 
 
 btn.addEventListener('click', () => {
@@ -50,7 +70,7 @@ btn.addEventListener('click', () => {
         row1.appendChild(c3);
         table1.appendChild(row1)
 
-        if ((stopwatch.elapsedTime <= 4100) == true && (3900 <= stopwatch.elapsedTime) == true) {
+        if ((stopwatch.elapsedTime <= 4100) == true && (3990 <= stopwatch.elapsedTime) == true) {
             time.style.color = 'green';
         }
         else if ((stopwatch.elapsedTime <= 4200) == true && (3800 <= stopwatch.elapsedTime) == true) {
@@ -63,7 +83,18 @@ btn.addEventListener('click', () => {
             time.style.color='red';
         }
 
-        attemptList.push(stopwatch.elapsedTime)
+        attemptList.push(stopwatch.elapsedTime);
+        attemptNum.push(attempts);
+
+
+        ctx.data.push(attemptNum);
+        ctx.data.push(attemptList);
+
+        return ctx.data;
+
+
+
+
 
 
 
@@ -111,3 +142,5 @@ function displayTime(hour, minutes, seconds, milliseconds) {
     time.innerHTML = leadZeroTime.join(':')
 
 }
+
+
